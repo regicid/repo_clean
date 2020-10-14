@@ -13,10 +13,11 @@ for i in a:
 		print(i)
 
 
-R = np.zeros((10,len(Results)))
+R = np.zeros((11,len(Results)))
 
 for i in range(len(Results)):
-	a = np.mean(Results[i].q_history[-10000:])
+	#a = np.mean(Results[i].q_history[-10000:])
+	a = Results[i].q
 	b = Results[i].anti_conformist.mean()
 	c = (Results[i].follower*Results[i].α).mean()
 	d = (Results[i].follower*~Results[i].α).mean()
@@ -25,8 +26,8 @@ for i in range(len(Results)):
 	g = Results[i].Ω
 	h = np.mean(Results[i].prop_i[-10000:])
 	j = np.abs(np.array(Results[i].q_history[-10000:]) - .5).mean()
+	k = np.max(Results[i].anti_history[-10000:]) - np.min(Results[i].anti_history[-10000:])
 	p = Results[i].p
-	R[:,i] = np.array([a,b,c,d,e,f,g,h,j,p])
+	R[:,i] = np.array([a,b,c,d,e,f,g,h,j,k,p])
 
-print(list(R))
 np.save("result3.npy",R)
