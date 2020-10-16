@@ -8,8 +8,9 @@ from tqdm import tqdm_notebook as tqdm
 os.system("mkdir ./Results")
 
 class CurtyMarsili(object):
-    def __init__(self,z=0,z2 = 0,z3=0,a = 1, N=5000, p=0.52, m=11,γ = 0.05,γ2 = .05,σ_mut = 10**-8,α_dandy = 1,n = 100,Ω = 1,c = .03,selection_force=2,raoult=True,tqdm=False,T = 50000):
+    def __init__(self,z=0,z2 = 0,z3=0,a = 1, N=5000, p=0.52, m=11,γ = 0.05,γ2 = .05,σ_mut = 10**-8,α_dandy = 1,n = 100,Ω = 1,c = .03,selection_force=2,raoult=True,tqdm=False,T = 50000,true_score=False):
         #set the parameters
+	self.true_score = true_score
         self.tqdm = tqdm
         self.γ2 = γ2
         self.raoult = raoult
@@ -98,8 +99,12 @@ class CurtyMarsili(object):
                 not_listened = np.where(~np.isin(np.arange(self.N),np.append(self.network[I,],I)))[0]
                 p2 = p[not_listened]
                 p2 = p2/p2.sum()
-                self.network[I,weakest_link[i]] = np.random.choice(not_listened,p = p2)
-                self.network_scores[I,weakest_link[i]] = self.network_scores[I,].mean()
+		new = np.random.choice(not_listened,p = p2)
+                self.network[I,weakest_link[i]] = new
+		if self.true_score=True:
+			self.network_scores[I,weakest_link[i]] = self.network_scores[self.network==new].mean()
+		else:
+	                self.network_scores[I,weakest_link[i]] = self.network_scores[I,].mean()
             b = np.random.random(size=self.N)
             self.α[b<self.σ_mut] = 1 - self.α[b<self.σ_mut]
             b = np.random.random(size=self.N)
