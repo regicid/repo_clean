@@ -16,7 +16,7 @@ def get_cm(o):
     CM.dynamics(2*10**5)
     CM.compressor()
     o = np.round(o,2)
-    pickle.dump(CM,open(f"./Results/result_{o}","wb"))
+    pickle.dump(CM,open(f"./Results_fig4/result_{o}","wb"))
 
 l = mtp.Pool()
 runs = l.map_async(get_cm,z)

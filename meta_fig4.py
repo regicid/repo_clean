@@ -8,7 +8,7 @@ import math
 
 N = 12
 os.system("mkdir Results_fig4")
-PARAM = np.linspace(1.5,3,61)[1:]
+PARAM = np.linspace(0,1.5,60)
 
 
 for i in range(math.ceil(len(PARAM)/N)):
