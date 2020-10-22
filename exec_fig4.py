@@ -12,7 +12,7 @@ from classs import CurtyMarsili
 i = sys.argv[1]
 z = pickle.load(open("KWARGS_"+i,"rb"))
 def get_cm(o):
-    CM = CurtyMarsili(z=.9,z2=.9,N=3000,selection_force = 0,σ_mut = 0,α_dandy = o,p = .52)
+    CM = CurtyMarsili(z=.9,z2=.9,N=3000,selection_force = 0,σ_mut = 0,α_dandy = o,p = .52,T = 20000)
     CM.dynamics(2*10**5)
     CM.compressor()
     o = np.round(o,2)
