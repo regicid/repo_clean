@@ -3,7 +3,7 @@ import os
 import pickle
 import numpy as np
 Results = []
-path = "Results_fig4"
+path = "Results_fig6"
 a = os.listdir(path)
 for i in a:
 	try:
@@ -34,4 +34,4 @@ for i in range(len(Results)):
 	p = Results[i].p
 	R[:,i] = np.array([a,b,c,d,e,f,g,h,j,k,l,p])
 
-np.save("result3.npy",R)
+np.save(path.lower()+".npy",R)

@@ -7,7 +7,7 @@ import multiprocessing as mtp
 from tqdm import tqdm_notebook as tqdm
 
 class CurtyMarsili(object):
-    def __init__(self,z=0,z2 = 0,z3=0,a = 1, N=5000, p=0.52, m=11,γ = 0.05,γ2 = .05,σ_mut = 10**-8,α_dandy = 1,n = 100,Ω = 1,c = .03,selection_force=2,raoult=True,tqdm=False,T = 100000,true_score=False):
+    def __init__(self,z=0,z2 = 0,z3=0,a = 1, N=5000, p=0.52, m=11,γ = 0.05,γ2 = .05,σ_mut = 10**-8,α_dandy = 1,n = 100,Ω = 1,c = .03,selection_force=2,raoult=True,tqdm=False,T = 100000,true_score=True):
         #set the parameters
         self.true_score = true_score
         self.T = T
