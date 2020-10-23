@@ -16,16 +16,16 @@ for i in a:
 R = np.zeros((12,len(Results)))
 
 for i in range(len(Results)):
-	a = np.mean(Results[i].q_history[-5000:])
-	#a = Results[i].q
+	#a = np.mean(Results[i].q_history[-10000:])
+	a = Results[i].q
 	b = Results[i].anti_conformist.mean()
 	c = (Results[i].follower*Results[i].α).mean()
 	d = (Results[i].follower*~Results[i].α).mean()
 	e = (~Results[i].follower).mean()
 	f = Results[i].c
 	g = Results[i].Ω
-	h = np.mean(Results[i].prop_i[-10000:])
-	j = np.abs(np.array(Results[i].q_history[-10000:]) - .5).mean()
+	h = np.mean(Results[i].prop_i[-5000:])
+	j = np.abs(np.array(Results[i].q_history[-5000:]) - .5).mean()
 	k = np.max(Results[i].anti_history[-10000:]) - np.min(Results[i].anti_history[-10000:])
 	in_deg = np.zeros(Results[i].N,dtype="int")
 	z = np.unique(Results[i].network,return_counts=True)
