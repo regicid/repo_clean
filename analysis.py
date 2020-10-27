@@ -3,7 +3,7 @@ import os
 import pickle
 import numpy as np
 Results = []
-path = "Results_fig6"
+path = "Results"
 a = os.listdir(path)
 for i in a:
 	try:
