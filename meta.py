@@ -9,8 +9,8 @@ import math
 N = 40
 os.system("mkdir Results")
 PARAM = np.linspace(0,15,80)
-#P = np.linspace(.51,.57,7)
-P = [.52]
+P = np.linspace(.51,.55,5)
+#P = [.52]
 
 for p in P:
 	for i in range(math.ceil(len(PARAM)/N)):

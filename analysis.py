@@ -2,8 +2,9 @@ from classs import CurtyMarsili
 import os
 import pickle
 import numpy as np
+import sys
 Results = []
-path = "Results"
+path = sys.argv[1]
 a = os.listdir(path)
 for i in a:
 	try:
