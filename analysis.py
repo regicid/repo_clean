@@ -2,8 +2,9 @@ from classs import CurtyMarsili
 import os
 import pickle
 import numpy as np
+import sys
 Results = []
-path = "Results"
+path = sys.argv[1]
 a = os.listdir(path)
 for i in a:
 	try:
@@ -13,7 +14,7 @@ for i in a:
 		print(i)
 
 
-R = np.zeros((12,len(Results)))
+R = np.zeros((13,len(Results)))
 
 for i in range(len(Results)):
 	#a = np.mean(Results[i].q_history[-10000:])
@@ -30,8 +31,9 @@ for i in range(len(Results)):
 	in_deg = np.zeros(Results[i].N,dtype="int")
 	z = np.unique(Results[i].network,return_counts=True)
 	in_deg[z[0]] = z[1]
-	l = max(in_deg) 
+	l = max(in_deg)
+	m = Results[i].α_dandy 
 	p = Results[i].p
-	R[:,i] = np.array([a,b,c,d,e,f,g,h,j,k,l,p])
+	R[:,i] = np.array([a,b,c,d,e,f,g,h,j,k,l,m,p])
 
 np.save(path.lower()+".npy",R)
