@@ -34,7 +34,7 @@ class CurtyMarsili(object):
         self.σ_mut = σ_mut
         self.γ = γ # Memory loss of partner's performance
         self.network = np.empty(shape = (self.N,m),dtype = "int16")
-        #self.network_scores = np.zeros(shape = (self.N,m))
+        self.network_scores = np.zeros(shape = (self.N,m))
         for i in range(self.N):
             self.network[i,] = np.random.choice(np.delete(range(N),i),size=m,replace=False)
         self.D = np.empty(N)
@@ -84,16 +84,16 @@ class CurtyMarsili(object):
             a = np.unique(self.network,return_counts=True)
             in_deg[a[0]] = a[1]
             #self.in_d = np.vstack((self.in_d,in_deg))
-            #self.network_scores += (self.D[self.network]>0) + self.α_dandy*np.broadcast_to(self.α,shape=(self.m,self.N)).transpose()*(self.D[self.network]
-            #                        - np.mean(self.D[self.network]))**2 - self.γ*self.network_scores
+            self.network_scores += (self.D[self.network]>0) + self.α_dandy*np.broadcast_to(self.α,shape=(self.m,self.N)).transpose()*(self.D[self.network]
+                                    - np.mean(self.D[self.network]))**2 - self.γ*self.network_scores
             a = np.where(np.random.random(size=self.N)< self.γ)[0]
             #Shuffle the network to avoid argmin issues
             z = np.random.permutation(self.m) 
             self.network = self.network[:,z]
-            #self.network_scores = self.network_scores[:,z]
+            self.network_scores = self.network_scores[:,z]
             #select the poorest forecaster
-            #weakest_link = np.argmin(self.network_scores[a,],axis=1)
-            weakest_link = np.argmin(self.accuracy[self.network[a,]],axis=1)
+            weakest_link = np.argmin(self.network_scores[a,],axis=1)
+            #weakest_link = np.argmin(self.accuracy[self.network[a,]],axis=1)
             p = in_deg + self.a
             for i in range(len(a)):
                 I = a[i]
@@ -102,10 +102,10 @@ class CurtyMarsili(object):
                 p2 = p2/p2.sum()
                 new = np.random.choice(not_listened,p = p2)
                 self.network[I,weakest_link[i]] = new
-                #if self.true_score:
-                        #self.network_scores[I,weakest_link[i]] = self.network_scores[self.network==new].mean()
-                #else:
-                        #self.network_scores[I,weakest_link[i]] = self.network_scores[I,].mean()
+                if self.true_score:
+                        self.network_scores[I,weakest_link[i]] = self.network_scores[self.network==new].mean()
+                else:
+                        self.network_scores[I,weakest_link[i]] = self.network_scores[I,].mean()
             b = np.random.random(size=self.N)
             self.α[b<self.σ_mut] = 1 - self.α[b<self.σ_mut]
             b = np.random.random(size=self.N)
@@ -132,7 +132,7 @@ class CurtyMarsili(object):
         j = np.random.choice(range(self.N),p = self.fitness)
         self.α[i] = self.α[j]
         self.network[i,] = self.network[j,]
-        #self.network_scores[i,] = self.network_scores[j,]
+        self.network_scores[i,] = self.network_scores[j,]
         self.follower[i] = self.follower[j]
         self.anti_conformist[i] = self.anti_conformist[j]
         self.accuracy[i] = self.accuracy[j]
