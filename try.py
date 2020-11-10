@@ -137,11 +137,7 @@ class CurtyMarsili(object):
         self.anti_conformist[i] = self.anti_conformist[j]
         self.accuracy[i] = self.accuracy[j]
     def compressor(self):
-<<<<<<< HEAD
-        self.q = np.mean(self.q_history[-2*10**6:])
-=======
         self.q = np.mean(self.q_history[-4*10**6:])
->>>>>>> 6887dde1e468615160f98d89a3ff1c5127250efd
         self.f_history = pd.DataFrame(self.f_history).rolling(100).mean().values[::100,0]
         self.α_history = pd.DataFrame(self.α_history).rolling(100).mean().values[::100,0]
         self.prop_i = pd.DataFrame(self.prop_i).rolling(100).mean().values[::100,0]
@@ -155,11 +151,7 @@ z = pickle.load(open("KWARGS_"+i,"rb"))
 
 def get_cm(o):
     CM = CurtyMarsili(z=.04,z2=.02,z3=0,Ω = o,γ = .05,c = .01,p = p,raoult=False)
-<<<<<<< HEAD
     CM.dynamics(3*10**6)
-=======
-    CM.dynamics(5*10**6)
->>>>>>> 6887dde1e468615160f98d89a3ff1c5127250efd
     CM.compressor()
     o = np.round(o,2)
     pp = np.round(p,2)     
