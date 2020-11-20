@@ -138,11 +138,12 @@ class CurtyMarsili(object):
         self.accuracy[i] = self.accuracy[j]
     def compressor(self):
         self.q = np.mean(self.q_history[-4*10**6:])
+        self.herding = np.abs(np.array(Results[i].q_history[10**6:]) - .5).mean()
         self.f_history = pd.DataFrame(self.f_history).rolling(100).mean().values[::100,0]
         self.α_history = pd.DataFrame(self.α_history).rolling(100).mean().values[::100,0]
         self.prop_i = pd.DataFrame(self.prop_i).rolling(100).mean().values[::100,0]
-        self.q_history = self.q_history[::100]
         self.anti_history = pd.DataFrame(self.anti_history).rolling(100).mean().values[::100,0]
+        self.q_history = pd.DataFrame(self.q_history).rolling(100).mean().values[::100,0]
         self.N_f= self.N_f[::100]
         self.fitness_history = pd.DataFrame(self.fitness_history).rolling(100).mean().values[::100,:]
 i = sys.argv[1]
@@ -150,12 +151,12 @@ p = float(sys.argv[2])
 z = pickle.load(open("KWARGS_"+i,"rb"))
 
 def get_cm(o):
-    CM = CurtyMarsili(z=.04,z2=.02,z3=0,Ω = o,γ = .05,c = .01,p = p,raoult=False)
-    CM.dynamics(3*10**6)
+    CM = CurtyMarsili(z=.04,z2=.02,z3=.02,Ω = o,γ = .05,c = .01,p = p,raoult=True)
+    CM.dynamics(4*10**6)
     CM.compressor()
     o = np.round(o,2)
     pp = np.round(p,2)     
-    pickle.dump(CM,open(f"./Results_fig6/result_{o}_{pp}_bis","wb"))
+    pickle.dump(CM,open(f"./Results/result_{o}_{pp}_bis","wb"))
 
 l = mtp.Pool()
 runs = l.map_async(get_cm,z)
