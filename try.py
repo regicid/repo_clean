@@ -138,7 +138,7 @@ class CurtyMarsili(object):
         self.accuracy[i] = self.accuracy[j]
     def compressor(self):
         self.q = np.mean(self.q_history[-4*10**6:])
-        self.herding = np.abs(np.array(Results[i].q_history[10**6:]) - .5).mean()
+        self.herding = np.abs(np.array(self.q_history[10**6:]) - .5).mean()
         self.f_history = pd.DataFrame(self.f_history).rolling(100).mean().values[::100,0]
         self.α_history = pd.DataFrame(self.α_history).rolling(100).mean().values[::100,0]
         self.prop_i = pd.DataFrame(self.prop_i).rolling(100).mean().values[::100,0]
