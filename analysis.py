@@ -26,7 +26,7 @@ for i in range(len(Results)):
 	e = (~Results[i].follower).mean()
 	f = Results[i].c
 	g = Results[i].Ω
-	h = np.mean(Results[i].prop_i)
+	h = np.mean(Results[i].prop_i[1:])
 	j = np.abs(np.array(Results[i].q_history[-5000:]) - .5).mean()
 	k = np.max(Results[i].anti_history[-10000:]) - np.min(Results[i].anti_history[-10000:])
 	in_deg = np.zeros(Results[i].N,dtype="int")
