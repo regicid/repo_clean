@@ -18,7 +18,7 @@ R = np.zeros((13,len(Results)))
 
 for i in range(len(Results)):
 	a = np.mean(Results[i].q_history[-10000:])
-	#a = Results[i].q
+	a = Results[i].q
 	#b = Results[i].anti_conformist.mean()
 	b = np.mean(Results[i].anti_history[-10000:])
 	c = (Results[i].follower*Results[i].α).mean()
