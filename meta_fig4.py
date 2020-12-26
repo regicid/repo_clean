@@ -8,7 +8,7 @@ import math
 
 N = 16
 os.system("mkdir Results_fig4")
-PARAM = np.logspace(0,11,128)-1
+PARAM = np.logspace(0,np.log10(11),128)-1
 
 
 for i in range(math.ceil(len(PARAM)/N)):
