@@ -4,21 +4,37 @@ library(stringr)
 languages = c("french","english","german")
 language = "french"
 Tableau = read.csv(str_c("Cultural_",language,".csv"),stringsAsFactors = F)
-i = 0
 
-I = i+1
-for(i in I:nrow(Tableau)){
-if(is.na(Tableau$Wikidata[i]) | nchar(Tableau$Wikidata[i])){
-  url<-Tableau$URL_total[i]
+extract = function(Chunk){
+chunk = Tableau[Chunk,]
+chunk2 = chunk
+for(i in 1:nrow(chunk)){
+if(is.na(chunk$Wikidata[i]) | nchar(chunk$Wikidata[i])==0){
+url<-chunk$URL_total[i]
+tryCatch({
   Text<-readLines(url)
   Text<-Text[grep('<li id="t-whatlinkshere">',Text)]
   Text<-unlist(strsplit(Text,'"'))
   c<-grep('https://www.wikidata.org/wiki/',Text)
-  if(length(c)==0){
-    Tableau$Wikidata[i]<-"No Wikidata"
-  }else{Tableau$Wikidata[i]<-Text[c]}
-  print(i)}}
-write.csv(Tableau,str_c("Cultural_",language,"_2.csv"))
+  if(length(c)>0){
+  chunk2$Wikidata[i] = Text[c]}
+  print(i)}, error=function(e){})
+}
+}
+return(chunk2)}
+
+
+##library(foreach)
+#library(doParallel)
+#n = 20
+#registerDoParallel(20)
+Tableau = dplyr::filter(Tableau,Birth_dates<1841)
+b = 1:nrow(Tableau)
+#b = split(b, cut(seq_along(b), n, labels = FALSE))
+
+#ia = foreach(Chunk=iter(b), .packages=c("stringr")) %dopar% { extract(Chunk) }
+
+#write.csv(Tableau,str_c("Cultural_",language,"_2.csv"))
 
 
 
